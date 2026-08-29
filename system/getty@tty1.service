@@ -21,7 +21,7 @@ Before=rescue.service
 ConditionPathExists=/dev/tty0
 
 [Service]
-ExecStart=-/sbin/agetty --autologin forge --noreset --noclear %I ${TERM}
+ExecStart=-/sbin/agetty --autologin below --noreset --noclear %I ${TERM}
 Type=idle
 Restart=always
 RestartSec=0
