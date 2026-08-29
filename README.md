@@ -1,4 +1,4 @@
-# Raspberry Pi 5 Composite Delay
+# Raspberry Pi Composite Delay
 
 ## Install
 
@@ -13,6 +13,9 @@ sudo chmod a+rwx /opt
 cd /opt
 git clone --recursive https://github.com/below-industries/rasp-composite-delay
 cd rasp-composite-delay
-make install
+
+make install-5 # raspberry pi 5
+make install-4 # raspberry pi 4
+
 reboot
 ```
