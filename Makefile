@@ -26,7 +26,7 @@ setup-rasp-5-config:
 .PHONY: setup-rasp-4-config
 setup-rasp-4-config:
 	sudo $(PROJECT_DIR)/line_in_file.sh "include custom.txt" "/boot/firmware/config.txt"
-	sudo $(PROJECT_DIR)/line_in_file.sh "vc4.tv_norm=PAL" "/boot/firmware/config.txt" "vc4.tv_norm"
+	sudo $(PROJECT_DIR)/line_in_file.sh "vc4.tv_norm=PAL" "/boot/firmware/cmdline.txt" "vc4.tv_norm"
 	sudo cp -f $(PROJECT_DIR)/system/config-4.ini /boot/firmware/custom.txt
 
 .PHONY: setup-services
@@ -51,4 +51,5 @@ run:
 
 .PHONY: start-weston
 start-weston:
+	echo "on" | sudo tee /sys/class/drm/card1-Composite-1/status
 	/usr/bin/weston --shell=kiosk-shell.so --xwayland -- kitty --hold make -C $(PROJECT_DIR) run
