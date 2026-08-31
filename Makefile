@@ -1,6 +1,7 @@
 # ENV
 
 PROJECT_DIR ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+RUN_ARGS ?=
 
 # ACTIONS
 
@@ -21,12 +22,14 @@ setup-weston:
 setup-rasp-5-config:
 	sudo $(PROJECT_DIR)/line_in_file.sh "include custom.txt" "/boot/firmware/config.txt"
 	sudo $(PROJECT_DIR)/line_in_file.sh "vc4.tv_norm=PAL" "/boot/firmware/config.txt" "vc4.tv_norm"
+	sudo $(PROJECT_DIR)/line_in_file.sh "quiet" "/boot/firmware/cmdline.txt"
 	sudo cp -f $(PROJECT_DIR)/system/config-5.ini /boot/firmware/custom.txt
 
 .PHONY: setup-rasp-4-config
 setup-rasp-4-config:
 	sudo $(PROJECT_DIR)/line_in_file.sh "include custom.txt" "/boot/firmware/config.txt"
 	sudo $(PROJECT_DIR)/line_in_file.sh "vc4.tv_norm=PAL" "/boot/firmware/cmdline.txt" "vc4.tv_norm"
+	sudo $(PROJECT_DIR)/line_in_file.sh "quiet" "/boot/firmware/cmdline.txt"
 	sudo cp -f $(PROJECT_DIR)/system/config-4.ini /boot/firmware/custom.txt
 
 .PHONY: setup-services
@@ -47,9 +50,9 @@ install-4: remove-passwd apt-install setup-weston setup-rasp-4-config setup-serv
 
 .PHONY: run
 run:
-	$(PROJECT_DIR)/delay.sh
+	@$(PROJECT_DIR)/delay.sh $(RUN_ARGS)
 
 .PHONY: start-weston
 start-weston:
-	echo "on" | sudo tee /sys/class/drm/card1-Composite-1/status
-	/usr/bin/weston --shell=kiosk-shell.so --xwayland -- kitty --hold make -C $(PROJECT_DIR) run
+	@echo "on" | sudo tee /sys/class/drm/card1-Composite-1/status
+	@/usr/bin/weston --shell=kiosk-shell.so --xwayland -- kitty --hold make -C $(PROJECT_DIR) run
