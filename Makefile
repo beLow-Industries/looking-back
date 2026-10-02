@@ -50,10 +50,10 @@ setup-bashrc:
 	$(PROJECT_DIR)/line_in_file.sh "make -C $(PROJECT_DIR) --no-print-directory start-weston" "$(HOME)/.bashrc"
 
 .PHONY: install-5
-install-5: remove-passwd apt-install setup-weston setup-firmware setup-rasp-5-config setup-services remove-motd setup-bashrc
+install-5: remove-passwd apt-install setup-weston setup-services remove-motd setup-bashrc setup-firmware setup-rasp-5-config
 
 .PHONY: install-4
-install-4: remove-passwd apt-install setup-weston setup-firmware setup-rasp-4-config setup-services remove-motd setup-bashrc
+install-4: remove-passwd apt-install setup-weston setup-services remove-motd setup-bashrc setup-firmware setup-rasp-4-config
 
 .PHONY: run
 run:
