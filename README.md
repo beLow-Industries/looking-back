@@ -45,8 +45,9 @@ cd looking-back
 ## 3. Install the project
 
 ```bash
-make install-5 # raspberry pi 5
-make install-4 # raspberry pi 4
+make install-60 # for 60s delay
+
+make install-5-30 # for rasp 5 and 30s delay
 ```
 
 > Note: if prompting for `raspi-config` select "2 Display Options" and enable composite, then select "finish"

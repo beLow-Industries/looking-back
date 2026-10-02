@@ -36,7 +36,6 @@ setup-rasp-5-config:
 .PHONY: setup-rasp-4-config
 setup-rasp-4-config:
 	sudo cp -f $(PROJECT_DIR)/system/config-4.ini /boot/firmware/custom.txt
-	sudo raspi-config
 
 .PHONY: setup-services
 setup-services:
@@ -44,16 +43,22 @@ setup-services:
 	sudo systemctl daemon-reload
 	sudo systemctl enable getty@tty1.service seatd.service
 
-.PHONY: setup-bashrc
-setup-bashrc:
-	$(PROJECT_DIR)/line_in_file.sh "export RUN_ARGS=30" "$(HOME)/.bashrc" "export RUN_ARGS="
+.PHONY: setup-bashrc-%
+setup-bashrc-%:
+	$(PROJECT_DIR)/line_in_file.sh "export RUN_ARGS=$*" "$(HOME)/.bashrc" "export RUN_ARGS="
 	$(PROJECT_DIR)/line_in_file.sh "make -C $(PROJECT_DIR) --no-print-directory start-weston" "$(HOME)/.bashrc"
 
-.PHONY: install-5
-install-5: remove-passwd apt-install setup-weston setup-services remove-motd setup-bashrc setup-firmware setup-rasp-5-config
+.PHONY: install-5-%
+install-5-%: remove-passwd apt-install setup-weston setup-services remove-motd setup-firmware setup-rasp-5-config
+	@$(MAKE) -s setup-bashrc-$*
 
-.PHONY: install-4
-install-4: remove-passwd apt-install setup-weston setup-services remove-motd setup-bashrc setup-firmware setup-rasp-4-config
+.PHONY: install-4-%
+install-4-%: remove-passwd apt-install setup-weston setup-services remove-motd setup-firmware setup-rasp-4-config
+	@$(MAKE) -s setup-bashrc-$*
+
+.PHONY: install-%
+install-%:
+	@$(MAKE) -s install-4-$*
 
 .PHONY: run
 run:
