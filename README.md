@@ -1,4 +1,6 @@
-# Raspberry Pi Composite Delay
+# Looking Back
+
+> Raspberry Pi Composite Delay
 
 ## 0. Prepare Raspberry Pi
 
@@ -36,8 +38,8 @@ sudo apt update
 sudo apt install -y git
 sudo chmod a+rwx /opt
 cd /opt
-git clone --recursive https://github.com/below-industries/rasp-composite-delay
-cd rasp-composite-delay
+git clone --recursive https://github.com/below-industries/looking-back
+cd looking-back
 ```
 
 ## 3. Install the project
