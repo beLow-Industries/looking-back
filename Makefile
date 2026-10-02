@@ -46,6 +46,7 @@ setup-services:
 
 .PHONY: setup-bashrc
 setup-bashrc:
+	$(PROJECT_DIR)/line_in_file.sh "export RUN_ARGS=30" "$(HOME)/.bashrc" "export RUN_ARGS="
 	$(PROJECT_DIR)/line_in_file.sh "make -C $(PROJECT_DIR) --no-print-directory start-weston" "$(HOME)/.bashrc"
 
 .PHONY: install-5
